@@ -3,7 +3,13 @@ import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { supabase } from '../supabaseClient';
 
 const ProfileScreen = () => {
-  const [profile, setProfile] = useState({
+  interface Profile {
+    nomeUser: string;
+    emailUser: string;
+    foneUser: string;
+  }
+  
+  const [profile, setProfile] = useState<Profile>({
     nomeUser: '',
     emailUser: '',
     foneUser: '',
@@ -18,7 +24,11 @@ const ProfileScreen = () => {
     if (error) {
       console.error(error);
     } else {
-      setProfile(data.user_metadata);
+      setProfile({
+        nomeUser: data.user.user_metadata.nomeUser,
+        emailUser: data.user.user_metadata.emailUser,
+        foneUser: data.user.user_metadata.foneUser,
+      });
     }
   };
 
